@@ -17,8 +17,8 @@ Instructions:
 Server Setup:
 a. Open the backend folder and create a file named .env. This file is essential for security purposes.
 b. Inside the .env file, add the following content, replacing the placeholders with your actual values:
-{
 ```
+{
     serverport = 'your port'
     user = 'your db user'
     host = 'your host'
