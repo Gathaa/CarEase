@@ -7,21 +7,17 @@ import Insurance from '../components/Insurancecomp';
 import Kilometrage from '../components/Kilometrage';
 import CarAge from '../components/CarAge';
 import Technicalvisit from '../components/TechnicalVisit';
-
 export default function viewInfo() {
-
   useEffect(() => {
     getcarname()
   }, [])
-
   const [car, carData] = useState([])
-
   const getcarname = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
       console.log(token)
       const response = await Axios.get(
-        `http://IpAddress:ServerPort/getcardata`,
+        `http://192.168.1.3:3000/getcardata`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,7 +29,6 @@ export default function viewInfo() {
         alert(`Something Went Wrong !!`);
       }
       else {
-        
         carData(response.data)
         console.log(car)
       }
@@ -41,7 +36,6 @@ export default function viewInfo() {
       console.error(error);
     }
   };
-
   return (
     <SafeAreaView style={{ backgroundColor: "#1E293B" }}>
       <ScrollView>
@@ -51,7 +45,8 @@ export default function viewInfo() {
         <Text style={styles.type}>{data.Brand}</Text>
         <Text style={styles.brand}>{data.Type}</Text>
         </View>
-      )})}
+      )}
+      )}
         <Image style={styles.Car} source={require("../assets/image121.png")} />
         <ScrollView
           contentContainerStyle={{
@@ -61,7 +56,7 @@ export default function viewInfo() {
             marginTop: 350,
           }}
         >
-          <Text style={styles.specification}>specification</Text>
+          <Text style={styles.specification}>Specification :</Text>
           {car.map((data, index) => {
       return (
         <View key={index} style={{ flexDirection: "row" }}>
@@ -75,7 +70,7 @@ export default function viewInfo() {
                 }}
               />
               <Text style={styles.OilChange}>Oil change</Text>
-              <Text style={styles.Every10000Miles}>test</Text>
+              <Text style={styles.Every10000Miles}>{data.Emptying}</Text>
             </View>
           </View>
           <View style={styles.Insurance1}>
@@ -150,8 +145,7 @@ const styles = StyleSheet.create({
     right: "66.91%",
     color: "rgba(255,255,255,1)",
     fontWeight: "600",
-    fontSize: 30,
-    
+    fontSize: 30, 
   },
   Car: {
     top: "19%",

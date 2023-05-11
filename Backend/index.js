@@ -126,8 +126,33 @@ app.get('/getcardata', (req, res) => {
   });
 });
 
+app.get('/getscheduele', (req, res) => {
+  const token1 = req.headers.authorization;
 
+  if (!token1) {
+    return res.status(401).send('Missing authorization header');
+  }
+  const token = token1.split(' ')[1];
+  const decodedToken = jwt.verify(token, 'jwtSecretKey');
+  const userId = decodedToken.id;
+  db.query("SELECT * from Agenda WHERE owner_id =?", [userId], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      if (result.length > 0) {
+        const schedueleinfo = result.map(val => ({
+          EventTxt :val.EventTxt,
+          Event_Date : val.selectedDay
 
+        }));
+        return res.send(schedueleinfo);
+      } else {
+        return res.status(404).send("No cars found");
+      }
+    }
+  })
+})
 app.get('/auth', verifyJWT, (req, res) => {
   res.send("You Are Authenticated !!")
 })
@@ -152,7 +177,7 @@ app.post('/login', (req, res) => {
     }
   });
 });
-app.post('/addcar', (req, res) => { 
+app.post('/addcar', (req, res) => {
   const token1 = req.headers.authorization;
   if (!token1) {
     return res.status(401).send('Missing authorization header');
@@ -164,7 +189,7 @@ app.post('/addcar', (req, res) => {
   const Type = req.body.Type;
   const Kilo = req.body.Kilo;
   const Age = req.body.Age;
-  const Insurance = req.body.Insurance;   
+  const Insurance = req.body.Insurance;
   const Empty = req.body.Empty;
   const Visit = req.body.Visit;
 
@@ -185,33 +210,16 @@ app.post('/Schedule', (req, res) => {
     return res.status(401).send('Missing authorization header');
   }
   const token = token1.split(' ')[1];
-  const decodedToken = jwt.verify(token,'jwtSecretKey');
+  const decodedToken = jwt.verify(token, 'jwtSecretKey');
   const userId = decodedToken.id;
   const EventTxt = req.body.EventTxt
-  const Event_Date= req.body.selectedDay
-  db.query("INSERT INTO agenda (EventTxt, Event_Date, owner_id) VALUES (?,?,?) ", [EventTxt, Event_Date,userId], (err, result) => {
+  const Event_Date = req.body.selectedDay
+  db.query("INSERT INTO agenda (EventTxt, Event_Date, user_id) VALUES (?,?,?) ", [EventTxt, Event_Date, userId], (err, result) => {
     if (err) { console.log(err) }
     else { res.send('Great Success') }
   });
 })
-app.get('/getscheduele',(req,res)=>{
-  const token1 = req.headers.authorization;
 
-  if (!token1) {
-    return res.status(401).send('Missing authorization header');
-  }
-  const token = token1.split(' ')[1];
-  const decodedToken = jwt.verify(token, 'jwtSecretKey');
-  const userId = decodedToken.id;
-  db.query("SELECT * from Agenda WHERE owner_id =?",[userId],(err,result)=>{
-    if (err){
-      console.log(err)
-    }
-    else{
-      res.send()
-    }
-  })
-})
 
 app.post('/location', (req, res) => {
   const store_name = req.body.store_name;

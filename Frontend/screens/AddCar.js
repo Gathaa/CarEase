@@ -17,7 +17,7 @@ const AddCar = ({ navigation }) => {
       const token = await AsyncStorage.getItem("token");
       console.log(token)
       const response = await Axios.post(
-        `http://IpAddress:ServerPort/addcar`,
+        `http://192.168.1.3:3000/addcar`,
         {   
           Brand: Brand,
           Type: Type,
@@ -93,9 +93,9 @@ const AddCar = ({ navigation }) => {
         onChangeText={Setvisit}
 
       />
-      <Pressable style={styles.button} onPress={addcar}>
+      <TouchableOpacity style={styles.button} onPress={addcar}>
         <Text style={{ textAlign: 'center', color: 'white', paddingTop: 10 }}>Add Car</Text>
-      </Pressable>
+      </TouchableOpacity>
       <View style={styles.skipSection}>
         <Text style={{ textAlign: 'center', color: 'white' }}>Already Have a Car ?</Text>
         <TouchableOpacity style={styles.skipButton} onPress={()=>{navigation.navigate("tab")}}>

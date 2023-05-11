@@ -24,32 +24,47 @@ const Schedule = ({ navigation }) => {
   const[selectTimer, setselectTimer] = useState('');
   const[status, setStatus] = useState(true);
   const [items, setItems] = useState<{[key: string]: Item[]}>({'2023-04-26': [{Event: 'test1'}]})
+  const [Scheduleinfo,Setschedule] = useState([])
   
   useEffect(()=>{
     
     handleDayPress
-    getScheduleInfo
+    getScheduleInfo()
   },
 
     [EventTxt])
 
-  const getScheduleInfo = async ()=>{
-    try{
-      const result = await Axios.get("http://192.168.17.121:3000/getscheduele")
-      result.data;
-      console.log(result.data);
-      setItems(result.data)
-  }catch (err){
-      console.log(err)
-  }
-  }
+    const getScheduleInfo = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        console.log(token)
+        const response = await Axios.get(
+          `http://192.168.1.3:3000/getscheduele`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data.includes("Error Occured While Adding !")) {
+          alert(`Something Went Wrong !!`);
+        }
+        else {
+          Setschedule(response.data)
+          console.log(Scheduleinfo)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
   
   const addScheduleInfo = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
       console.log(token)
       const response = await Axios.post(
-        `http://192.168.1.157:3000/Schedule`,
+        `http://192.168.1.3:3000/Schedule`,
         {   
         EventTxt:EventTxt,
         selectedDay:selectedDay,
@@ -100,7 +115,14 @@ const Schedule = ({ navigation }) => {
         
         onChangeText={setEventTxt}
         >
-        
+          {Scheduleinfo.map((data, index) => {
+      return (
+        <View>
+        <Text>{data.EventTxt}</Text>
+        <Text>{data.selectedDay}</Text>
+        </View>
+      )}
+      )}
         </TextInput>
         <Pressable style={{padding: 12}}onPress={addScheduleInfo}>
           <Text>Submit</Text>

@@ -21,7 +21,7 @@ import AddCar from "../screens/AddCar";
 import { Marker } from "react-native-maps";
 import CarDetails from "../screens/CarDetails";
 import CarComponent from "../components/CarComponent";
-
+import Notification from "../screens/Notification";
 const Tabs = () => {
   return (
     <Tab.Navigator
@@ -46,11 +46,8 @@ const Tabs = () => {
           else if (route.name === 'YourProfile') {
             iconName = focused ? 'profile' : 'profile'; // No functional 
           }
-
-          // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-
       })}
 
       tabBarOptions={{
@@ -71,12 +68,13 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Notif" component={Notification} />
       <Stack.Screen name='Sign' component={SignUp} />
       <Stack.Screen name='Marker' component={MarkerGenerator} />
       <Stack.Screen name="Shop" component={ShopCreation} />
       <Stack.Screen name='LogIn' component={LogIn} />
       <Stack.Screen name="AddCars" component={AddCar} />
-      <Stack.Screen name='tab' component={Tabs}/> 
+      <Stack.Screen name='tab' component={Tabs} />
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="ViewInfo" component={ViewInfo} />
       <Stack.Screen name='Details' component={CarDetails} />
