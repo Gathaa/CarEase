@@ -39,7 +39,7 @@ const Schedule = ({ navigation }) => {
         const token = await AsyncStorage.getItem("token");
         console.log(token)
         const response = await Axios.get(
-          `http://192.168.1.3:3000/getscheduele`,
+          `http://192.168.103.3:3000/getscheduele`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ const Schedule = ({ navigation }) => {
       const token = await AsyncStorage.getItem("token");
       console.log(token)
       const response = await Axios.post(
-        `http://192.168.1.3:3000/Schedule`,
+        `http://192.168.103.3:3000/Schedule`,
         {   
         EventTxt:EventTxt,
         selectedDay:selectedDay,

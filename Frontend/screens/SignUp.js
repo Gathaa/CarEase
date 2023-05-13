@@ -33,7 +33,7 @@ const SignUp = ({ navigation }) => {
         name.trim() === "" || (email.trim() === "" || !email.includes("@")) || (phonenumber.trim() === "" || phonenumber.toString().length < 8) || password.trim() === "";
     const adduser = async () => {
         try {
-            const response = await Axios.post(`http:/192.168.1.3:3000/register`, {
+            const response = await Axios.post(`http:/192.168.103.3:3000/register`, {
                 name: name,
                 email: email,
                 phonenumber: phonenumber,
@@ -61,7 +61,6 @@ const SignUp = ({ navigation }) => {
             <View>
                 <Text style={styles.mainword}>Sign Up</Text>
                 <Text style={styles.labelname}>Username :</Text>
-                <NotificationComponent notificationScheduled={true} />
 
                 <TextInput
                     style={styles.inputname}

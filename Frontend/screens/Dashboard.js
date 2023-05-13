@@ -18,7 +18,7 @@ export default function carlist({ navigation }) {
       const token = await AsyncStorage.getItem("token");
       console.log(token)
       const response = await Axios.get(
-        `http://192.168.1.3:3000/getcardata`,
+        `http://192.168.103.3:3000/getcardata`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ export default function carlist({ navigation }) {
       const token = await AsyncStorage.getItem("token");
       console.log(token)
       const response = await Axios.get(
-        `http://192.168.1.3:3000/getownername`,
+        `http://192.168.103.3:3000/getownername`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -17,7 +17,7 @@ const AddCar = ({ navigation }) => {
       const token = await AsyncStorage.getItem("token");
       console.log(token)
       const response = await Axios.post(
-        `http://192.168.1.3:3000/addcar`,
+        `http://192.168.103.3:3000/addcar`,
         {   
           Brand: Brand,
           Type: Type,

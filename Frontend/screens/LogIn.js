@@ -21,7 +21,7 @@ const LogIn = ({ navigation }) => {
     const [Status, Setstatus] = useState(false);
     const checkuser = async () => {
         try {
-            const response = await Axios.post(`http://192.168.1.3:3000/login`, {
+            const response = await Axios.post(`http://192.168.103.3:3000/login`, {
                 email: email,
                 password: password,
             });
@@ -50,7 +50,7 @@ const LogIn = ({ navigation }) => {
         AsyncStorage.getItem("token")
             .then((token) => {
                 if (token) {
-                    Axios.get("http://IpAddress:ServerPort/auth", {
+                    Axios.get("http://192.168.103.3:3000/auth", {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },

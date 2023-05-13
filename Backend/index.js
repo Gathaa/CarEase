@@ -207,14 +207,14 @@ app.post('/addcar', (req, res) => {
 app.post('/Schedule', (req, res) => {
   const token1 = req.headers.authorization;
   if (!token1) {
-    return res.status(401).send('Missing authorization header');
+    return res.status(401).send('Missing authorization header');     
   }
   const token = token1.split(' ')[1];
   const decodedToken = jwt.verify(token, 'jwtSecretKey');
   const userId = decodedToken.id;
   const EventTxt = req.body.EventTxt
   const Event_Date = req.body.selectedDay
-  db.query("INSERT INTO agenda (EventTxt, Event_Date, user_id) VALUES (?,?,?) ", [EventTxt, Event_Date, userId], (err, result) => {
+  db.query("INSERT INTO agenda (EventTxt, Event_Date, owner_id) VALUES (?,?,?) ", [EventTxt, Event_Date, userId], (err, result) => {
     if (err) { console.log(err) }
     else { res.send('Great Success') }
   });
